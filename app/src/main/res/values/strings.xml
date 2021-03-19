@@ -14,4 +14,5 @@
     <string name="choose_status">Выберите статус :</string>
     <string name="update">Обновить</string>
     <string name="please_type_task_name">Пожалуйста, введите название задачи</string>
+    <string name="edit_task">Редактировать задачу</string>
 </resources>

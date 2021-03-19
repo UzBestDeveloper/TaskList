@@ -41,6 +41,7 @@ class TaskListAdapter(private var context: Context, private val clickListener: T
             }
             binding.textViewDueDate.text = item.due_date
             binding.imageViewEdit.setOnClickListener { clickListener.onTaskEdited(item) }
+            binding.linearLayout.setOnClickListener { clickListener.onTaskEdited(item) }
             binding.imageViewDelete.setOnClickListener { clickListener.onTaskDeleted(item) }
         }
 

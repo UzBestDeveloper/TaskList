@@ -56,6 +56,8 @@ class CreateNewTaskActivity : AppCompatActivity() {
         if (task != null) {
             mode = "edit"
 
+            binding.toolbar.title = getString(R.string.edit_task)
+
             val format = SimpleDateFormat("dd/MM/yyyy")
             try {
                 date = format.parse(task!!.due_date).time
