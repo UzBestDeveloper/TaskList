@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.CreateNewTaskActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        app:titleTextColor="@color/white"
+        android:background="@color/main_color"
+        app:title="@string/create_new_task"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
+
+
+       <RelativeLayout
+           android:layout_margin="20dp"
+           android:background="@drawable/bkg_edit_text"
+           android:layout_width="match_parent"
+           android:layout_height="50dp">
+
+           <EditText
+               android:id="@+id/edit_text_name"
+               android:imeOptions="actionDone"
+               android:layout_centerInParent="true"
+               android:hint="@string/type_task_title"
+               android:background="@android:color/transparent"
+               android:layout_marginEnd="@dimen/basic_margin"
+               android:layout_marginStart="@dimen/basic_margin"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"/>
+
+       </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:scrollbarSize="0dp"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="@dimen/basic_margin"
+                android:text="@string/choose_due_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <CalendarView
+                android:theme="@style/MyCalendarView"
+                android:id="@+id/calendar_view"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginStart="@dimen/basic_margin"
+                android:text="@string/choose_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/text_view_status"
+                android:layout_marginStart="@dimen/basic_margin"
+                android:text="@string/in_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:weightSum="2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/button_in_progress"
+                    android:backgroundTint="@color/black"
+                    android:textSize="12sp"
+                    android:text="@string/in_progress"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/button_done"
+                    android:textSize="12sp"
+                    android:text="@string/done"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"/>
+
+            <Button
+                android:id="@+id/button_create"
+                android:text="@string/create"
+                android:layout_margin="@dimen/basic_margin"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</LinearLayout>

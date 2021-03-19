@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">TaskList</string>
+    <string name="all">все</string>
+    <string name="done">выполнено</string>
+    <string name="in_progress">в прогрессе</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="due_date">Срок</string>
+    <string name="today">Сегодня</string>
+    <string name="create_new_task">Создать новую задачу</string>
+    <string name="type_task_title">Введите название задачи</string>
+    <string name="choose_due_date">Выберите срок</string>
+    <string name="create">Создать</string>
+    <string name="choose_status">Выберите статус :</string>
+</resources>
