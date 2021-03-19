@@ -1,29 +1,18 @@
-package com.developeruz.tasklist.adapters.viewpager;
+package com.developeruz.tasklist.adapters.viewpager
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import java.util.List;
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
 
-public class BasicViewPager2Adapter extends FragmentStateAdapter {
-
-    private final List<Fragment> mFragments;
-
-    public BasicViewPager2Adapter(FragmentActivity fa, List<Fragment> fragments) {
-        super(fa);
-        this.mFragments = fragments;
-
+class BasicViewPager2Adapter(fa: FragmentActivity?, private val mFragments: List<Fragment>) :
+    FragmentStateAdapter(
+        fa!!
+    ) {
+    override fun createFragment(i: Int): Fragment {
+        return mFragments[i]
     }
 
-    @NonNull
-    @Override
-    public Fragment createFragment(int i) {
-        return mFragments.get(i);
-    }
-
-    @Override
-    public int getItemCount() {
-        return mFragments.size();
+    override fun getItemCount(): Int {
+        return mFragments.size
     }
 }
