@@ -53,6 +53,7 @@
                     android:layout_height="wrap_content"/>
 
                 <ImageView
+                    android:id="@+id/image_view_edit"
                     android:paddingStart="10dp"
                     android:paddingEnd="5dp"
                     android:layout_gravity="center_vertical"
@@ -61,6 +62,7 @@
                     android:layout_height="wrap_content"/>
 
                 <ImageView
+                    android:id="@+id/image_view_delete"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
                     android:layout_gravity="center_vertical"

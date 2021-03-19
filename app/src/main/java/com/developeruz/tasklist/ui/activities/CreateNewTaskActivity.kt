@@ -13,15 +13,18 @@ import com.developeruz.tasklist.databinding.ActivityCreateNewTaskBinding
 import com.developeruz.tasklist.db.Task
 import com.developeruz.tasklist.ui.fragments.allTasks.AllTasksViewModel
 import com.developeruz.tasklist.ui.fragments.allTasks.AllTasksViewModelFactory
-import java.text.DateFormat
+import com.google.android.material.snackbar.Snackbar
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CreateNewTaskActivity : AppCompatActivity() {
 
+    private var mode: String = "create"
     private var status: Int = 0
     private lateinit var binding: ActivityCreateNewTaskBinding
-    private var date : Long = Calendar.getInstance().time.time
+    private var date: Long = Calendar.getInstance().time.time
+    private var task: Task? = null
 
     private val viewModel: AllTasksViewModel by viewModels {
         AllTasksViewModelFactory((application as TaskApplication).repository)
@@ -34,7 +37,6 @@ class CreateNewTaskActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    @SuppressLint("SimpleDateFormat")
     private fun initView() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
@@ -42,10 +44,44 @@ class CreateNewTaskActivity : AppCompatActivity() {
             setDisplayShowHomeEnabled(true)
         }
 
+        clicks()
+
+        editMode()
+
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun editMode() {
+        task = intent.getSerializableExtra("task") as Task?
+        if (task != null) {
+            mode = "edit"
+
+            val format = SimpleDateFormat("dd/MM/yyyy")
+            try {
+                date = format.parse(task!!.due_date).time
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            binding.calendarView.date = date
+            binding.buttonCreate.text = getString(R.string.update)
+            binding.editTextName.setText(task!!.name)
+            status = task!!.status
+
+            if (status == 1) {
+                binding.textViewStatus.text = resources.getString(R.string.done)
+                changeButtonBKG(binding.buttonDone, binding.buttonInProgress)
+            }else{
+                binding.textViewStatus.text = resources.getString(R.string.in_progress)
+                changeButtonBKG(binding.buttonInProgress, binding.buttonDone)
+            }
+        }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun clicks() {
         binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             val calendar = Calendar.getInstance()
-            // set the calendar date as calendar view selected date
-            calendar.set(year,month,dayOfMonth)
+            calendar.set(year, month, dayOfMonth)
             date = calendar.time.time
         }
 
@@ -62,17 +98,33 @@ class CreateNewTaskActivity : AppCompatActivity() {
         }
 
         binding.buttonCreate.setOnClickListener {
-            val sdf = SimpleDateFormat("dd/MM/yyyy")
-            val selectedDate: String = sdf.format(Date(date))
+            if (binding.editTextName.text.toString() != "") {
+                if (mode == "edit" && task != null) {
+                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+                    val selectedDate: String = sdf.format(Date(date))
 
-            val task = Task(
-                0,
-                binding.editTextName.text.toString(),
-                status,
-                selectedDate
-            )
-            viewModel.insert(task)
-            finish()
+                    task!!.name = binding.editTextName.text.toString()
+                    task!!.status = status
+                    task!!.due_date = selectedDate
+
+                    viewModel.update(task!!)
+                    finish()
+                } else {
+                    val sdf = SimpleDateFormat("dd/MM/yyyy")
+                    val selectedDate: String = sdf.format(Date(date))
+
+                    val task = Task(
+                        0,
+                        binding.editTextName.text.toString(),
+                        status,
+                        selectedDate
+                    )
+                    viewModel.insert(task)
+                    finish()
+                }
+            }else{
+                Snackbar.make(binding.root,getString(R.string.please_type_task_name),Snackbar.LENGTH_SHORT).show()
+            }
         }
     }
 

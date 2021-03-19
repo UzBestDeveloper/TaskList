@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="doneTasksViewModel"
-            type="com.developeruz.tasklist.ui.fragments.doneTasks.DoneTasksViewModel" />
+            name="allTasksViewModel"
+            type="com.developeruz.tasklist.ui.fragments.allTasks.AllTasksViewModel" />
     </data>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -2,7 +2,6 @@ package com.developeruz.tasklist.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -12,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.developeruz.tasklist.R
 import com.developeruz.tasklist.databinding.ItemTaskListBinding
 import com.developeruz.tasklist.db.Task
+import com.developeruz.tasklist.utils.TaskListener
 
 
-class TaskListAdapter(private var context: Context,private val clickListener: TaskClickListener) : ListAdapter<Task, TaskListAdapter.ViewHolder>(
+class TaskListAdapter(private var context: Context, private val clickListener: TaskListener) : ListAdapter<Task, TaskListAdapter.ViewHolder>(
     DiffTaskCallback()
 ) {
 
@@ -23,12 +23,12 @@ class TaskListAdapter(private var context: Context,private val clickListener: Ta
         binding.root
     ){
 
-        fun bind(item: Task, clickListener: TaskClickListener, context: Context) {
+        fun bind(item: Task, clickListener: TaskListener, context: Context) {
             setData(item,clickListener,context)
         }
 
         @SuppressLint("SetTextI18n")
-        fun setData(item: Task, clickListener: TaskClickListener, context: Context) {
+        fun setData(item: Task, clickListener: TaskListener, context: Context) {
             binding.textViewName.text = item.name
             if (item.status == 0) {
                 binding.textViewStatus.text = context.resources.getString(R.string.in_progress)
@@ -40,8 +40,8 @@ class TaskListAdapter(private var context: Context,private val clickListener: Ta
                 binding.viewLeft.background = ContextCompat.getDrawable(context,R.drawable.left_cornered_done);
             }
             binding.textViewDueDate.text = item.due_date
-            binding.linearLayout.setOnClickListener { clickListener.onClicked(item) }
-
+            binding.imageViewEdit.setOnClickListener { clickListener.onTaskEdited(item) }
+            binding.imageViewDelete.setOnClickListener { clickListener.onTaskDeleted(item) }
         }
 
         companion object {
@@ -76,8 +76,4 @@ class DiffTaskCallback : DiffUtil.ItemCallback<Task>() {
         return oldItem == newItem
     }
 
-}
-
-class TaskClickListener(val clickListener: (task:Task) -> Unit) {
-    fun onClicked(task: Task) = clickListener(task)
 }

@@ -25,14 +25,17 @@
 
            <EditText
                android:id="@+id/edit_text_name"
-               android:imeOptions="actionDone"
+               android:imeOptions="actionGo"
+               android:maxLines="1"
                android:layout_centerInParent="true"
                android:hint="@string/type_task_title"
                android:background="@android:color/transparent"
                android:layout_marginEnd="@dimen/basic_margin"
                android:layout_marginStart="@dimen/basic_margin"
                android:layout_width="match_parent"
-               android:layout_height="wrap_content"/>
+               android:layout_height="wrap_content"
+               android:importantForAutofill="no"
+               tools:ignore="TextFields" />
 
        </RelativeLayout>
 

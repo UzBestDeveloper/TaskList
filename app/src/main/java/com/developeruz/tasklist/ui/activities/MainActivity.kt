@@ -15,10 +15,10 @@ import com.developeruz.tasklist.TaskApplication
 import com.developeruz.tasklist.adapters.viewpager.BasicViewPager2Adapter
 import com.developeruz.tasklist.databinding.ActivityMainBinding
 import com.developeruz.tasklist.ui.fragments.allTasks.AllTasksFragment
+import com.developeruz.tasklist.ui.fragments.DoneTasksFragment
+import com.developeruz.tasklist.ui.fragments.InProgressTasksFragment
 import com.developeruz.tasklist.ui.fragments.allTasks.AllTasksViewModel
 import com.developeruz.tasklist.ui.fragments.allTasks.AllTasksViewModelFactory
-import com.developeruz.tasklist.ui.fragments.doneTasks.DoneTasksFragment
-import com.developeruz.tasklist.ui.fragments.inProgressTasks.InProgressTasksFragment
 import com.developeruz.tasklist.utils.hideKeyboard
 import com.developeruz.tasklist.utils.vibrate
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity() {
     private val fragments: MutableList<Fragment> = LinkedList()
     private var lastClickedId = R.id.all
 
-    private val viewModel: MainViewModel by viewModels {
-        MainViewModelFactory((application as TaskApplication).repository)
+    private val viewModel: AllTasksViewModel by viewModels {
+        AllTasksViewModelFactory((application as TaskApplication).repository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,10 +65,10 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        observeDatas()
+        observeData()
     }
 
-    private fun observeDatas() {
+    private fun observeData() {
         viewModel.tasks.observe(this, {
             binding.textViewAll.text = it.size.toString()
         })

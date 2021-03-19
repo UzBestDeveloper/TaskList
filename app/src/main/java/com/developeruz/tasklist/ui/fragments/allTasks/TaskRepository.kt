@@ -22,10 +22,18 @@ class TaskRepository(private val taskDao: TaskDao) {
     val todayTasks: Flow<List<Task>> = taskDao.getTodayTasks(today)
 
 
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
     suspend fun insert(task: Task) {
         taskDao.insert(task)
+    }
+
+
+    suspend fun update(task: Task) {
+        taskDao.update(task)
+    }
+
+
+    suspend fun deleteTask(task: Task) {
+        taskDao.delete(task)
     }
 
 }

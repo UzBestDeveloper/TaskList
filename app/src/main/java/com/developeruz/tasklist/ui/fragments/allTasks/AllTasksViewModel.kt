@@ -12,9 +12,36 @@ class AllTasksViewModel(private var repository: TaskRepository) : ViewModel() {
         get() = _tasks
 
 
+    private val _doneTasks = repository.doneTasks.asLiveData()
+    val doneTasks: LiveData<List<Task>>
+        get() = _doneTasks
+
+
+    private val _inProgressTasks = repository.inProgressTasks.asLiveData()
+    val inProgressTasks: LiveData<List<Task>>
+        get() = _inProgressTasks
+
+
+    private val _todayTasks = repository.todayTasks.asLiveData()
+    val todayTasks: LiveData<List<Task>>
+        get() = _todayTasks
+
+
+
     fun insert(task: Task) = viewModelScope.launch {
         repository.insert(task)
     }
+
+
+    fun update(task: Task) = viewModelScope.launch {
+        repository.update(task)
+    }
+
+
+    fun deleteTask(task: Task) = viewModelScope.launch{
+        repository.deleteTask(task)
+    }
+
 
 
 }

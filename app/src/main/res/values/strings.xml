@@ -12,4 +12,6 @@
     <string name="choose_due_date">Выберите срок</string>
     <string name="create">Создать</string>
     <string name="choose_status">Выберите статус :</string>
+    <string name="update">Обновить</string>
+    <string name="please_type_task_name">Пожалуйста, введите название задачи</string>
 </resources>

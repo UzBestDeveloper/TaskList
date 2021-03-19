@@ -1,5 +1,6 @@
 package com.developeruz.tasklist.ui.fragments.allTasks
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,20 +10,23 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.developeruz.tasklist.R
 import com.developeruz.tasklist.TaskApplication
-import com.developeruz.tasklist.adapters.TaskClickListener
 import com.developeruz.tasklist.adapters.TaskListAdapter
 import com.developeruz.tasklist.databinding.FragmentAllTasksBinding
 import com.developeruz.tasklist.db.Task
+import com.developeruz.tasklist.ui.activities.CreateNewTaskActivity
+import com.developeruz.tasklist.utils.TaskListener
 
 
-class AllTasksFragment : Fragment() {
+class AllTasksFragment : Fragment(), TaskListener {
+
+    var allTasksViewModel : AllTasksViewModel? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding: FragmentAllTasksBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_all_tasks, container, false)
 
-        val allTasksViewModel = viewModelInit(binding)
+        allTasksViewModel = viewModelInit(binding)
 
-        initRecyclerView(binding, allTasksViewModel)
+        initRecyclerView(binding, allTasksViewModel!!)
 
         return binding.root
     }
@@ -31,7 +35,7 @@ class AllTasksFragment : Fragment() {
         binding: FragmentAllTasksBinding,
         allTasksViewModel: AllTasksViewModel
     ) {
-        val adapter = TaskListAdapter(requireContext(),TaskClickListener { navigateToEdit(it) })
+        val adapter = TaskListAdapter(requireContext(),this)
         binding.recyclerView.adapter = adapter
 
 
@@ -40,11 +44,6 @@ class AllTasksFragment : Fragment() {
         })
     }
 
-    private fun navigateToEdit(it: Task) {
-
-    }
-
-
     private fun viewModelInit(binding: FragmentAllTasksBinding): AllTasksViewModel {
         val viewModelFactory = AllTasksViewModelFactory((requireActivity().application as TaskApplication).repository)
         val allTasksViewModel =
@@ -52,6 +51,16 @@ class AllTasksFragment : Fragment() {
 
         binding.allTasksViewModel = allTasksViewModel
         return allTasksViewModel
+    }
+
+    override fun onTaskEdited(task: Task) {
+        val intent = Intent(requireActivity(), CreateNewTaskActivity::class.java)
+        intent.putExtra("task", task)
+        startActivity(intent)
+    }
+
+    override fun onTaskDeleted(task: Task) {
+       allTasksViewModel!!.deleteTask(task)
     }
 
 }
