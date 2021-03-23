@@ -27,6 +27,7 @@
                android:id="@+id/edit_text_name"
                android:imeOptions="actionGo"
                android:maxLines="1"
+               android:inputType="text"
                android:layout_centerInParent="true"
                android:hint="@string/type_task_title"
                android:background="@android:color/transparent"

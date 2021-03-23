@@ -44,7 +44,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViewPager() {
 
-        binding.viewPager2.isUserInputEnabled = false
+        binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                when (position) {
+                    0 -> {
+                        lastClickedId = R.id.all
+                    }
+                    1 -> {
+                        lastClickedId = R.id.done
+                    }
+                    2 -> {
+                        lastClickedId = R.id.in_progress
+                    }
+                }
+                binding.bottomNavigationView.menu.getItem(position).isChecked = true
+            }
+        })
 
         fragments.add(AllTasksFragment())
         fragments.add(DoneTasksFragment())

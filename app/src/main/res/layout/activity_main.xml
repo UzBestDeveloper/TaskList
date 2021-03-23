@@ -18,6 +18,7 @@
             android:layout_height="110dp">
 
             <ImageView
+                android:background="?android:attr/actionBarItemBackground"
                 android:id="@+id/image_view_add"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
