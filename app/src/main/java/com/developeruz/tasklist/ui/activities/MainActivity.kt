@@ -126,7 +126,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun ViewPager2.setCurrentItem(
         item: Int,
         duration: Long,
