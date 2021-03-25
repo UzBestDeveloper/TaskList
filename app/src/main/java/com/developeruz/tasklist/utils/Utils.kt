@@ -26,12 +26,3 @@ fun vibrate(context: Context) {
         v.vibrate(VibrationEffect.createOneShot(10, VibrationEffect.DEFAULT_AMPLITUDE))
     }
 }
-
-
-fun formatBalance(value: Float): String {
-    val symbols = DecimalFormatSymbols()
-    symbols.groupingSeparator = ' '
-    val df = DecimalFormat("#,###.##", symbols)
-    return df.format(value).replace(",", ".")
-}
-

@@ -13,11 +13,9 @@ import com.developeruz.tasklist.databinding.ItemTaskListBinding
 import com.developeruz.tasklist.db.Task
 import com.developeruz.tasklist.utils.TaskListener
 
-
 class TaskListAdapter(private var context: Context, private val clickListener: TaskListener) : ListAdapter<Task, TaskListAdapter.ViewHolder>(
     DiffTaskCallback()
 ) {
-
 
     class ViewHolder private constructor(private val binding: ItemTaskListBinding) : RecyclerView.ViewHolder(
         binding.root
@@ -63,7 +61,6 @@ class TaskListAdapter(private var context: Context, private val clickListener: T
         holder.bind(item!!, clickListener,context)
     }
 
-
 }
 
 class DiffTaskCallback : DiffUtil.ItemCallback<Task>() {
@@ -71,7 +68,6 @@ class DiffTaskCallback : DiffUtil.ItemCallback<Task>() {
     override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
         return oldItem.name == newItem.name
     }
-
 
     override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
         return oldItem == newItem
