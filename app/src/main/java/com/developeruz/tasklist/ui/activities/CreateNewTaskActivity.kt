@@ -81,7 +81,7 @@ class CreateNewTaskActivity : AppCompatActivity() {
 
     @SuppressLint("SimpleDateFormat")
     private fun clicks() {
-        binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
+        binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             val calendar = Calendar.getInstance()
             calendar.set(year, month, dayOfMonth)
             date = calendar.time.time
