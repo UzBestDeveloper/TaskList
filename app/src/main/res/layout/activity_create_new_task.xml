@@ -96,22 +96,28 @@
                 android:layout_height="wrap_content">
 
                 <Button
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/main_color"
                     android:id="@+id/button_in_progress"
-                    android:backgroundTint="@color/black"
                     android:textSize="12sp"
                     android:text="@string/in_progress"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    style="?android:attr/buttonBarButtonStyle" />
+
                 <Button
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/custom_gray"
                     android:id="@+id/button_done"
                     android:textSize="12sp"
                     android:text="@string/done"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    style="?android:attr/buttonBarButtonStyle" />
 
             </LinearLayout>
 

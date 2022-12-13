@@ -2,22 +2,25 @@ package com.developeruz.tasklist.ui.activities
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.developeruz.tasklist.R
-import com.developeruz.tasklist.TaskApplication
 import com.developeruz.tasklist.databinding.ActivityCreateNewTaskBinding
 import com.developeruz.tasklist.db.Task
 import com.developeruz.tasklist.ui.fragments.allTasks.AllTasksViewModel
-import com.developeruz.tasklist.ui.fragments.allTasks.AllTasksViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
+@Suppress("DEPRECATION")
+@AndroidEntryPoint
 class CreateNewTaskActivity : AppCompatActivity() {
 
     private var mode: String = "create"
@@ -26,9 +29,7 @@ class CreateNewTaskActivity : AppCompatActivity() {
     private var date: Long = Calendar.getInstance().time.time
     private var task: Task? = null
 
-    private val viewModel: AllTasksViewModel by viewModels {
-        AllTasksViewModelFactory((application as TaskApplication).repository)
-    }
+    private val viewModel: AllTasksViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +53,12 @@ class CreateNewTaskActivity : AppCompatActivity() {
 
     @SuppressLint("SimpleDateFormat")
     private fun editMode() {
-        task = intent.getSerializableExtra("task") as Task?
+        task = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra("task",Task::class.java)
+        }else{
+            intent.getSerializableExtra("task") as Task?
+        }
+
         if (task != null) {
             mode = "edit"
 
@@ -60,7 +66,7 @@ class CreateNewTaskActivity : AppCompatActivity() {
 
             val format = SimpleDateFormat("dd/MM/yyyy")
             try {
-                date = format.parse(task!!.due_date).time
+                date = format.parse(task!!.due_date)!!.time
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
@@ -131,22 +137,21 @@ class CreateNewTaskActivity : AppCompatActivity() {
     }
 
     private fun changeButtonBKG(btn: Button, btn2: Button) {
-        btn.setBackgroundTintList(
-            ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    this,
-                    R.color.black
-                )
+        btn.backgroundTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(
+                this,
+                R.color.main_color
             )
         )
-        btn2.setBackgroundTintList(
-            ColorStateList.valueOf(
-                ContextCompat.getColor(
-                    this,
-                    R.color.main_color
-                )
+        btn.setTextColor(ResourcesCompat.getColor(resources,R.color.white,null))
+        btn2.backgroundTintList = ColorStateList.valueOf(
+            ContextCompat.getColor(
+                this,
+                R.color.custom_gray
             )
         )
+        btn2.setTextColor(ResourcesCompat.getColor(resources,R.color.black,null))
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

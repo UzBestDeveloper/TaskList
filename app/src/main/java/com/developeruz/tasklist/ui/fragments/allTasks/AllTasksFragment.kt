@@ -1,56 +1,33 @@
 package com.developeruz.tasklist.ui.fragments.allTasks
 
 import android.content.Intent
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.developeruz.tasklist.R
-import com.developeruz.tasklist.TaskApplication
 import com.developeruz.tasklist.adapters.TaskListAdapter
 import com.developeruz.tasklist.databinding.FragmentAllTasksBinding
 import com.developeruz.tasklist.db.Task
 import com.developeruz.tasklist.ui.activities.CreateNewTaskActivity
+import com.developeruz.tasklist.ui.fragments.BaseFragment
 import com.developeruz.tasklist.utils.TaskListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
+class AllTasksFragment : BaseFragment(R.layout.fragment_all_tasks), TaskListener {
 
-class AllTasksFragment : Fragment(), TaskListener {
+    private val binding: FragmentAllTasksBinding by viewBinding()
+    private val viewModel: AllTasksViewModel by viewModels()
+    private var adapter: TaskListAdapter? = null
 
-    var allTasksViewModel : AllTasksViewModel? = null
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val binding: FragmentAllTasksBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_all_tasks, container, false)
-
-        allTasksViewModel = viewModelInit(binding)
-
-        initRecyclerView(binding, allTasksViewModel!!)
-
-        return binding.root
-    }
-
-    private fun initRecyclerView(
-        binding: FragmentAllTasksBinding,
-        allTasksViewModel: AllTasksViewModel
-    ) {
-        val adapter = TaskListAdapter(requireContext(),this)
+    override fun setup() {
+        adapter = TaskListAdapter(requireContext(), this)
         binding.recyclerView.adapter = adapter
-
-
-        allTasksViewModel.tasks.observe(viewLifecycleOwner, {
-            adapter.submitList(it)
-        })
     }
 
-    private fun viewModelInit(binding: FragmentAllTasksBinding): AllTasksViewModel {
-        val viewModelFactory = AllTasksViewModelFactory((requireActivity().application as TaskApplication).repository)
-        val allTasksViewModel =
-            ViewModelProvider(this, viewModelFactory).get(AllTasksViewModel::class.java)
-
-        binding.allTasksViewModel = allTasksViewModel
-        return allTasksViewModel
+    override fun observe() {
+        viewModel.tasks.observe(viewLifecycleOwner) {
+            adapter?.submitList(it)
+        }
     }
 
     override fun onTaskEdited(task: Task) {
@@ -60,7 +37,7 @@ class AllTasksFragment : Fragment(), TaskListener {
     }
 
     override fun onTaskDeleted(task: Task) {
-       allTasksViewModel!!.deleteTask(task)
+        viewModel.deleteTask(task)
     }
 
 }

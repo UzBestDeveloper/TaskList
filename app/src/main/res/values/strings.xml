@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">TaskList</string>
-    <string name="all">все</string>
-    <string name="done">выполнено</string>
-    <string name="in_progress">в прогрессе</string>
+    <string name="all">Все</string>
+    <string name="done">Выполнено</string>
+    <string name="in_progress">В процессе</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="due_date">Срок</string>
