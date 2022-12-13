@@ -11,6 +11,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.developeruz.tasklist.R
 import com.developeruz.tasklist.databinding.ActivityCreateNewTaskBinding
 import com.developeruz.tasklist.db.Task
+import com.developeruz.tasklist.ui.base.BaseActivity
 import com.developeruz.tasklist.ui.fragments.allTasks.AllTasksViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint

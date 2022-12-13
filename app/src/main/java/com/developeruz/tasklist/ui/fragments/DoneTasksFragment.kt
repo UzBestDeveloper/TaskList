@@ -8,6 +8,7 @@ import com.developeruz.tasklist.ui.adapters.TaskListAdapter
 import com.developeruz.tasklist.databinding.FragmentDoneTasksBinding
 import com.developeruz.tasklist.db.Task
 import com.developeruz.tasklist.ui.activities.CreateNewTaskActivity
+import com.developeruz.tasklist.ui.base.BaseFragment
 import com.developeruz.tasklist.ui.fragments.allTasks.AllTasksViewModel
 import com.developeruz.tasklist.utils.TaskListener
 import dagger.hilt.android.AndroidEntryPoint

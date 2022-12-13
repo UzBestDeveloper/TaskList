@@ -1,4 +1,4 @@
-package com.developeruz.tasklist.ui.activities
+package com.developeruz.tasklist.ui.base
 
 import android.content.Context
 import android.graphics.Rect

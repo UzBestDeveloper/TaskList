@@ -1,4 +1,4 @@
-package com.developeruz.tasklist.ui.fragments
+package com.developeruz.tasklist.ui.base
 
 import android.os.Bundle
 import android.view.View
