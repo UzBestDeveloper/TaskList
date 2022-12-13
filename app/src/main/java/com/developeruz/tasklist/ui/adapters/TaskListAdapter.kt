@@ -1,4 +1,4 @@
-package com.developeruz.tasklist.adapters
+package com.developeruz.tasklist.ui.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -31,11 +31,11 @@ class TaskListAdapter(private var context: Context, private val clickListener: T
             if (item.status == 0) {
                 binding.textViewStatus.text = context.resources.getString(R.string.in_progress)
                 binding.imageViewStatus.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_circle_in_progress))
-                binding.viewLeft.background = ContextCompat.getDrawable(context,R.drawable.left_cornered_in_progress);
+                binding.viewLeft.background = ContextCompat.getDrawable(context,R.drawable.left_cornered_in_progress)
             }else{
                 binding.textViewStatus.text = context.resources.getString(R.string.done)
                 binding.imageViewStatus.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_circle_done))
-                binding.viewLeft.background = ContextCompat.getDrawable(context,R.drawable.left_cornered_done);
+                binding.viewLeft.background = ContextCompat.getDrawable(context,R.drawable.left_cornered_done)
             }
             binding.textViewDueDate.text = item.due_date
             binding.imageViewEdit.setOnClickListener { clickListener.onTaskEdited(item) }

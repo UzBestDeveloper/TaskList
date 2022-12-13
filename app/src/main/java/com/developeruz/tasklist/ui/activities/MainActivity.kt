@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.developeruz.tasklist.R
-import com.developeruz.tasklist.adapters.viewpager.BasicViewPager2Adapter
+import com.developeruz.tasklist.ui.adapters.viewpager.BasicViewPager2Adapter
 import com.developeruz.tasklist.databinding.ActivityMainBinding
 import com.developeruz.tasklist.ui.fragments.DoneTasksFragment
 import com.developeruz.tasklist.ui.fragments.InProgressTasksFragment

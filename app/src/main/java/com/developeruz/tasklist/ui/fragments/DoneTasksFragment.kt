@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.developeruz.tasklist.R
-import com.developeruz.tasklist.adapters.TaskListAdapter
+import com.developeruz.tasklist.ui.adapters.TaskListAdapter
 import com.developeruz.tasklist.databinding.FragmentDoneTasksBinding
 import com.developeruz.tasklist.db.Task
 import com.developeruz.tasklist.ui.activities.CreateNewTaskActivity

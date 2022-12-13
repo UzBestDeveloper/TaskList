@@ -3,12 +3,11 @@ package com.developeruz.tasklist.ui.activities
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Build
-import android.os.Bundle
 import android.widget.Button
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.developeruz.tasklist.R
 import com.developeruz.tasklist.databinding.ActivityCreateNewTaskBinding
 import com.developeruz.tasklist.db.Task
@@ -20,42 +19,28 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @Suppress("DEPRECATION")
+@SuppressLint("SimpleDateFormat")
 @AndroidEntryPoint
-class CreateNewTaskActivity : AppCompatActivity() {
+class CreateNewTaskActivity : BaseActivity(R.layout.activity_create_new_task) {
+
+    private val binding: ActivityCreateNewTaskBinding by viewBinding()
+    private val viewModel: AllTasksViewModel by viewModels()
 
     private var mode: String = "create"
     private var status: Int = 0
-    private lateinit var binding: ActivityCreateNewTaskBinding
     private var date: Long = Calendar.getInstance().time.time
     private var task: Task? = null
 
-    private val viewModel: AllTasksViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityCreateNewTaskBinding.inflate(layoutInflater)
-        initView()
-        setContentView(binding.root)
-    }
-
-    private fun initView() {
+    override fun setup() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
 
-        clicks()
-
-        editMode()
-
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private fun editMode() {
         task = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getSerializableExtra("task",Task::class.java)
-        }else{
+            intent.getSerializableExtra("task", Task::class.java)
+        } else {
             intent.getSerializableExtra("task") as Task?
         }
 
@@ -78,15 +63,14 @@ class CreateNewTaskActivity : AppCompatActivity() {
             if (status == 1) {
                 binding.textViewStatus.text = resources.getString(R.string.done)
                 changeButtonBKG(binding.buttonDone, binding.buttonInProgress)
-            }else{
+            } else {
                 binding.textViewStatus.text = resources.getString(R.string.in_progress)
                 changeButtonBKG(binding.buttonInProgress, binding.buttonDone)
             }
         }
     }
 
-    @SuppressLint("SimpleDateFormat")
-    private fun clicks() {
+    override fun clicks() {
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             val calendar = Calendar.getInstance()
             calendar.set(year, month, dayOfMonth)
@@ -130,11 +114,16 @@ class CreateNewTaskActivity : AppCompatActivity() {
                     viewModel.insert(task)
                     finish()
                 }
-            }else{
-                Snackbar.make(binding.root,getString(R.string.please_type_task_name),Snackbar.LENGTH_SHORT).show()
+            } else {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.please_type_task_name),
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
         }
     }
+
 
     private fun changeButtonBKG(btn: Button, btn2: Button) {
         btn.backgroundTintList = ColorStateList.valueOf(
@@ -143,21 +132,20 @@ class CreateNewTaskActivity : AppCompatActivity() {
                 R.color.main_color
             )
         )
-        btn.setTextColor(ResourcesCompat.getColor(resources,R.color.white,null))
+        btn.setTextColor(ResourcesCompat.getColor(resources, R.color.white, null))
         btn2.backgroundTintList = ColorStateList.valueOf(
             ContextCompat.getColor(
                 this,
                 R.color.custom_gray
             )
         )
-        btn2.setTextColor(ResourcesCompat.getColor(resources,R.color.black,null))
+        btn2.setTextColor(ResourcesCompat.getColor(resources, R.color.black, null))
 
     }
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
-
     }
 
 }

@@ -1,4 +1,4 @@
-package com.developeruz.tasklist.adapters.viewpager
+package com.developeruz.tasklist.ui.adapters.viewpager
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
