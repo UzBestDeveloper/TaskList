@@ -3,13 +3,16 @@ package com.developeruz.tasklist.utils
 import android.animation.Animator
 import android.animation.TimeInterpolator
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import androidx.viewpager2.widget.ViewPager2
+import java.text.SimpleDateFormat
+import java.util.*
 
- fun ViewPager2.setCurrentItem(
+fun ViewPager2.setCurrentItem(
     item: Int,
     duration: Long,
     interpolator: TimeInterpolator = AccelerateDecelerateInterpolator(),
@@ -25,10 +28,19 @@ import androidx.viewpager2.widget.ViewPager2
         previousValue = currentValue
     }
     animator.addListener(object : Animator.AnimatorListener {
-        override fun onAnimationStart(animation: Animator) { beginFakeDrag() }
-        override fun onAnimationEnd(animation: Animator) { endFakeDrag() }
-        override fun onAnimationCancel(animation: Animator) { /* Ignored */ }
-        override fun onAnimationRepeat(animation: Animator) { /* Ignored */ }
+        override fun onAnimationStart(animation: Animator) {
+            beginFakeDrag()
+        }
+
+        override fun onAnimationEnd(animation: Animator) {
+            endFakeDrag()
+        }
+
+        override fun onAnimationCancel(animation: Animator) { /* Ignored */
+        }
+
+        override fun onAnimationRepeat(animation: Animator) { /* Ignored */
+        }
     })
     animator.interpolator = interpolator
     animator.duration = duration
@@ -42,5 +54,10 @@ fun hideKeyboard(activity: Activity) {
         view = View(activity)
     }
     imm.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+@SuppressLint("SimpleDateFormat")
+fun today(): String {
+    return SimpleDateFormat("dd/MM/yyyy").format(Date(Calendar.getInstance().time.time))
 }
 

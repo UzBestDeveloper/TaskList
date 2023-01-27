@@ -1,11 +1,9 @@
 package com.developeruz.tasklist.ui.fragments.allTasks
 
-import android.annotation.SuppressLint
 import com.developeruz.tasklist.db.Task
 import com.developeruz.tasklist.db.TaskDao
+import com.developeruz.tasklist.utils.today
 import kotlinx.coroutines.flow.Flow
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,10 +16,7 @@ class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
 
     val inProgressTasks: Flow<List<Task>> = taskDao.getInProgressTasks()
 
-    @SuppressLint("SimpleDateFormat")
-    val today: String =
-        SimpleDateFormat("dd/MM/yyyy").format(Date(Calendar.getInstance().time.time))
-    val todayTasks: Flow<List<Task>> = taskDao.getTodayTasks(today)
+    val todayTasks: Flow<List<Task>> = taskDao.getTodayTasks(today())
 
     suspend fun insert(task: Task) {
         taskDao.insert(task)
